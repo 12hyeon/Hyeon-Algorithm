@@ -157,6 +157,74 @@ void heapsort(int n, heaptype* h, int* new) {
 }
 
 // Radix sort
+// Radix sort
+
+typedef struct {
+    int key;
+    struct node* link;
+}node;
+
+void insertnode(node* master, int i) {
+    node* n, *now = master;
+    n->key = i;
+    n->link = NULL;
+    if (now == NULL) {
+        now = n;
+    }
+    else {
+        while (now != NULL) {
+            now = now->link;
+        }
+        now = n;
+    }
+}
+
+node* radixsort(node* master, int num) {
+    int list[10];
+    for(int i=0; i<num; i++) {
+        distribute(master, list, i);
+        coalesce(master, list);
+    }
+    return master;
+}
+
+void distribute(node* master, int* list, int i) {
+    for(int j=0; j<10; j++) {
+        list[j] = NULL;
+    }
+    node* p = master;
+    node* n;
+    int j;
+    while (p != NULL) {
+        j = p->key;
+        n = list[j%10];
+        if (n != NULL) {
+            while (n != NULL) {
+                n = n->link;
+            }
+        }
+        n->key = j;
+        n->link = NULL;
+        p = p->link;
+    }
+}
+
+coalesce(node* master, int* list) {
+    master = NULL;
+    node* n;
+    for(int j=0; j<10; j++) {
+        if (master != NULL) {
+            while (master != NULL) {
+                master = master->link;
+            }
+        }
+        if (list[j] != NULL) {
+            n = list[j];
+            master->key = n->key;
+            master->link = n->link;
+        }
+    }
+}
 
 
 int main() {
@@ -224,6 +292,28 @@ int main() {
             printf("heap sort %d times : %d\n", num[n], (end-start));
             for (int x=1; x<=num[n]; x++) {
                 printf("%2d ", new[x]);
+            }
+            printf("\n");
+            */
+            
+            /*
+            node* result, *master;
+            for(int k=0; k<num[n]; k++) {
+                insertnode(master, S[4][k]);
+            }
+            start = clock();
+            result = radixsort(master, num[n]);
+            end = clock();
+            printf("radixsort sort %d times : %d\n", num[n], (end-start));
+
+            node* no = result;
+            int x=0;
+            while (no != NULL) {
+                S[4][x] = no->key;
+                no = no->link;
+            }
+            for (int x=0; x<num[n]; x++) {
+                printf("%2d ", S[0][x]);
             }
             printf("\n");
             */
