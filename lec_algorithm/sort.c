@@ -59,7 +59,6 @@ void merge(int low, int mid, int high, int *S) {
     }
 }
 
-
 // Quicksort
 void quicksort(int low, int high, int* S) {
     int pivot;
@@ -158,75 +157,38 @@ void heapsort(int n, heaptype* h, int* new) {
 }
 
 // Radix sort
-// Radix sort
-
-typedef struct {
+/*
+struct node {
     int key;
-    struct node* link;
+    node* link;
 }node;
 
-void insertnode(node* master, int i) {
-    node* n, *now = master;
-    n->key = i;
-    n->link = NULL;
-    if (now == NULL) {
-        now = n;
-    }
-    else {
-        while (now != NULL) {
-            now = now->link;
-        }
-        now = n;
-    }
-}
-
-node* radixsort(node* master, int num) {
-    int list[10];
+void radixsort(node* master, int num) {
+    node* list[10];
     for(int i=0; i<num; i++) {
         distribute(master, list, i);
         coalesce(master, list);
     }
-    return master;
 }
 
-void distribute(node* master, int* list, int i) {
+void distribute(node* master, node* list, int i) {
     for(int j=0; j<10; j++) {
         list[j] = NULL;
     }
     node* p = master;
-    node* n;
-    int j;
     while (p != NULL) {
-        j = p->key;
-        n = list[j%10];
-        if (n != NULL) {
-            while (n != NULL) {
-                n = n->link;
-            }
-        }
-        n->key = j;
-        n->link = NULL;
+        //j = ;
         p = p->link;
     }
 }
 
-coalesce(node* master, int* list) {
+void coalesce(node* master, node* list) {
     master = NULL;
-    node* n;
     for(int j=0; j<10; j++) {
-        if (master != NULL) {
-            while (master != NULL) {
-                master = master->link;
-            }
-        }
-        if (list[j] != NULL) {
-            n = list[j];
-            master->key = n->key;
-            master->link = n->link;
-        }
+        //
     }
 }
-
+*/
 
 int main() {
     int a[10000];
@@ -280,8 +242,6 @@ int main() {
             printf("\n");
             */
 
-            
-            
             int new[10000];
             heaptype* h = createheap();
             start = clock();
@@ -291,6 +251,13 @@ int main() {
             heapsort(h->size,h,new);
             end = clock();
             time[3] += (end-start);
+            /*
+            printf("heap sort %d times : %d\n", num[n], (end-start));
+            for (int x=1; x<=num[n]; x++) {
+                printf("%2d ", new[x]);
+            }
+            printf("\n");
+            */
         }
         printf("exchange sort %d times : %d\n", num[n], time[0]/5);
         printf("merge sort %d times : %d\n", num[n], time[1]/5);
@@ -299,3 +266,74 @@ int main() {
         printf("\n");
     }
 }
+
+// 미완성 구현사항
+// Radix sort
+
+typedef struct {
+    int key;
+    struct node* link;
+}node;
+
+void insertnode(node* master, int i) {
+    node* n, *now = master;
+    n->key = i;
+    n->link = NULL;
+    if (now == NULL) {
+        now = n;
+    }
+    else {
+        while (now != NULL) {
+            now = now->link;
+        }
+        now =
+    }
+}
+
+node* radixsort(node* master, int num) {
+    int list[10];
+    for(int i=0; i<num; i++) {
+        distribute(master, list, i);
+        coalesce(master, list);
+    }
+    return master;
+}
+
+void distribute(node* master, int* list, int i) {
+    for(int j=0; j<10; j++) {
+        list[j] = NULL;
+    }
+    node* p = master;
+    node* n;
+    int j;
+    while (p != NULL) {
+        j = p->key;
+        n = list[j%10];
+        if (n != NULL) {
+            while (n != NULL) {
+                n = n->link;
+            }
+        }
+        n->key = j;
+        n->link = NULL;
+        p = p->link;
+    }
+}
+
+coalesce(node* master, int* list) {
+    master = NULL;
+    node* n;
+    for(int j=0; j<10; j++) {
+        if (master != NULL) {
+            while (master != NULL) {
+                master = master->link;
+            }
+        }
+        if (list[j] != NULL) {
+            n = list[j];
+            master->key = n->key;
+            master->link = n->link;
+        }
+    }
+}
+
