@@ -288,35 +288,6 @@ int main() {
             heapsort(h->size,h,new);
             end = clock();
             time[3] += (end-start);
-            /*
-            printf("heap sort %d times : %d\n", num[n], (end-start));
-            for (int x=1; x<=num[n]; x++) {
-                printf("%2d ", new[x]);
-            }
-            printf("\n");
-            */
-            
-            /*
-            node* result, *master;
-            for(int k=0; k<num[n]; k++) {
-                insertnode(master, S[4][k]);
-            }
-            start = clock();
-            result = radixsort(master, num[n]);
-            end = clock();
-            printf("radixsort sort %d times : %d\n", num[n], (end-start));
-
-            node* no = result;
-            int x=0;
-            while (no != NULL) {
-                S[4][x] = no->key;
-                no = no->link;
-            }
-            for (int x=0; x<num[n]; x++) {
-                printf("%2d ", S[0][x]);
-            }
-            printf("\n");
-            */
         }
         printf("exchange sort %d times : %d\n", num[n], time[0]/5);
         printf("merge sort %d times : %d\n", num[n], time[1]/5);
