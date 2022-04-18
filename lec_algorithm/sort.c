@@ -59,6 +59,7 @@ void merge(int low, int mid, int high, int *S) {
     }
 }
 
+
 // Quicksort
 void quicksort(int low, int high, int* S) {
     int pivot;
@@ -279,6 +280,8 @@ int main() {
             printf("\n");
             */
 
+            
+            
             int new[10000];
             heaptype* h = createheap();
             start = clock();
