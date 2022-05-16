@@ -2,7 +2,7 @@
 
 INF = 10000
 
-def dijkstra(g, s, n):
+def dijkstr(g, s, n):
     node = [0] * n  # 방문한 노드 1, 방문 전 노드 0
     d = [0] * n  # 거리 기록
     node[s] = 1  # 방문 노드
@@ -21,20 +21,19 @@ def dijkstra(g, s, n):
         for j in range(n):
             if (node[j] == 0):
                 if (d[min]+g[min][j] < d[j]) :
-                    # 현재 선택한 노드를 지나는 길이 가장 값이 적으면 업데이트
                     d[j] = d[min] + g[min][j]
-                    
+                    # 현재 선택한 노드를 지나는 길이 가장 값이 적으면 업데이트
     return d
 
-n = int(input("입력할 그래프의 노드 수를 입력하세요>>"))
+n = int(input("입력할 그래프의 노드 수를 입력하세요 >> "))
 g = [[0]]*n # 그래프
 
 cnt = 0
-while 1 : # 잘못된 입력 방지용 loop
-    print("그래프를 입력하시오")
+while 1 :
+    print("그래프를 입력하시오. 단, 무한대는 10000으로 나타내시오.")
     cnt = 0
     for x in range(n):
-        print("  ", chr(65+x), end="")
+        print("  ", chr(65+x), end="  ")
     print()
     for x in range(n):
         print(chr(65+x), end=": ")
