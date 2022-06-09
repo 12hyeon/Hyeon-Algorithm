@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define TRUE 1  
 #define FALSE 0
-#define t 3 // b3 ?
+#define t 5 // t=5인 경우
 
 typedef struct node
 {
@@ -32,7 +32,7 @@ int Find_Predecessor(node* x);
 void btree_insert_items(btree* T, int x, int y);
 
 int func_random() {
-	int r = rand() % 10; // 0~9999?
+	int r = rand() % 10000; // 0~9999
 	printf("r:%d\n", r);
 	return r;
 }
@@ -43,8 +43,8 @@ int main()
 	btree_Create(T);
 	int x;
 	
-	// 1000개 넣기?
-	for(int i=0; i<5; i++) {
+	// 1000개 넣기
+	for(int i=0; i<1000; i++) {
 		x = func_random();
 		while (btree_Search(T,x) == 1) {
 			x = func_random();
@@ -59,8 +59,8 @@ int main()
 	btree_Display(T);
 	printf("\n======================\n");
 
-	// 삭제?
-	for(int i=0; i<3; i++) {
+	// 삭제
+	for(int i=0; i<500; i++) {
 		x = func_random();
 		while (btree_Search(T,x) == 0) {
 			x = func_random();
