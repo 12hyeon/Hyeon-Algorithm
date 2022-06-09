@@ -17,7 +17,6 @@ typedef struct btree
 	node* root;
 }btree;
 
-int rand();
 void btree_Create(btree* T);
 void btree_Insert(btree* T, int k);
 void btree_Insert_Nonfull(node* x, int k);
@@ -32,8 +31,9 @@ int Find_Successor(node* x);
 int Find_Predecessor(node* x);
 void btree_insert_items(btree* T, int x, int y);
 
-int rand() {
+int func_random() {
 	int r = rand() % 10; // 0~9999?
+	printf("r:%d\n", r);
 	return r;
 }
 
@@ -41,29 +41,37 @@ int main()
 {
 	btree* T = malloc(sizeof(btree));
 	btree_Create(T);
-	int command, x, y;
-
+	int x;
+	
 	// 1000개 넣기?
-	for(int x=0; x<10; x++) {
-		x = rand();
-		while (btree_Search(T,x) != 0) {
-			x = rand();
+	for(int i=0; i<5; i++) {
+		x = func_random();
+		while (btree_Search(T,x) == 1) {
+			x = func_random();
 		}
+
 		btree_Insert(T, x);
 		btree_Display(T);
 	}
 
 	// 넣은 것 확인
+	printf("\n======================\n");
 	btree_Display(T);
+	printf("\n======================\n");
 
-	for(int x=0; x<5; x++) { // ?
-		x = rand();
-		while (btree_Search(T,x) != 0) {
-			x = rand();
+	// 삭제?
+	for(int i=0; i<3; i++) {
+		x = func_random();
+		while (btree_Search(T,x) == 0) {
+			x = func_random();
 		}
 		btree_Delete(T, x);
 		btree_Display(T);
 	}
+
+	printf("\n======================\n");
+	btree_Display(T);
+	printf("\n======================\n");
 			
 	free(T);
 }
@@ -428,13 +436,13 @@ int Find_Successor(node* x) {
 }
  
     for (int i = 0; i < size; i++) {
-        insert(data); // 랜덤한 값 넣기
+        insert(data);
     }
 
     while (choice != 0) {
-        scanf("%d ", &value); // 삭제할 값
+        scanf("%d ", &value);
         delNode(data);
-        scanf("%d ", &choice); // 삭제할 값 여부
+        scanf("%d ", &choice);
     }
     printf("종료!\n");
 
