@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #define TRUE 1  
 #define FALSE 0
-#define t 5 // t=5인 경우
+#define t 5 // 5,7,9 수기로 변경
 
 typedef struct node
 {
@@ -16,6 +17,7 @@ typedef struct btree
 {
 	node* root;
 }btree;
+
 
 void btree_Create(btree* T);
 void btree_Insert(btree* T, int k);
@@ -33,7 +35,6 @@ void btree_insert_items(btree* T, int x, int y);
 
 int func_random() {
 	int r = rand() % 10000; // 0~9999
-	printf("r:%d\n", r);
 	return r;
 }
 
@@ -42,9 +43,12 @@ int main()
 	btree* T = malloc(sizeof(btree));
 	btree_Create(T);
 	int x;
-	
+
+	clock_t start, end;
+	start = clock();
+
 	// 1000개 넣기
-	for(int i=0; i<1000; i++) {
+	for(int i=0; i<8; i++) {
 		x = func_random();
 		while (btree_Search(T,x) == 1) {
 			x = func_random();
@@ -57,22 +61,23 @@ int main()
 	// 넣은 것 확인
 	printf("\n======================\n");
 	btree_Display(T);
-	printf("\n======================\n");
+	printf("======================\n");
 
-	// 삭제
-	for(int i=0; i<500; i++) {
+	// 삭제?
+	for(int i=0; i<5; i++) {
 		x = func_random();
-		while (btree_Search(T,x) == 0) {
-			x = func_random();
-		}
 		btree_Delete(T, x);
 		btree_Display(T);
 	}
+	end = clock();
 
 	printf("\n======================\n");
 	btree_Display(T);
-	printf("\n======================\n");
-			
+	printf("======================\n");
+	
+	printf("t : %d\n", t);
+	printf("[time : %f]\n", (float)(end - start)/CLOCKS_PER_SEC);
+
 	free(T);
 }
 
@@ -147,6 +152,7 @@ int btree_Search(btree* T, int k)
 	return btree_Search_Main(r, k);
 }
 
+
 int btree_Search_Main(node* x, int k)
 {
 	if (x->leaf)
@@ -162,7 +168,7 @@ int btree_Search_Main(node* x, int k)
 		}
 		else
 		{
-			return 0; // 값이 없음
+			return 0;
 		}
 	}
 }
@@ -170,8 +176,7 @@ int btree_Search_Main(node* x, int k)
 void btree_Split_Child(node* x, int i)
 {
 	node* z = malloc(sizeof(node));
-	if (z == NULL)
-	node* y = x->child[i];
+	node* y = x->child[i]; 
 	z->leaf = y->leaf;
 	z->n = t - 1;
 	for (int j = 0; j < t - 1; j++)
@@ -198,13 +203,11 @@ void btree_Split_Child(node* x, int i)
 	x->key[i] = y->key[t - 1];
 	x->n = x->n + 1;
 }
-
 void btree_Display(btree* T)
 {
 	node* r = T->root;
 	btree_Display_Main(r, 1);
 }
-
 void btree_Display_Main(node* x, int h)
 {
 	printf("%d : ", h);
@@ -221,7 +224,6 @@ void btree_Display_Main(node* x, int h)
 		}
 	}
 }
-
 void btree_Delete(btree* T, int k)
 {
 	node* r = T->root;
@@ -238,10 +240,10 @@ void btree_Delete(btree* T, int k)
 				r->key[j - 1] = r->key[j];
 			}
 			r->n--;
-			printf("delete success\n");
+			printf("삭제 성공\n");
 		}
 		else {
-			printf("no data");
+			printf("키 없음\n");
 		}
 		return;
 	}
@@ -366,7 +368,7 @@ void btree_Delete_main(node* x, int k) {
 				}
 				right_c->n--;
 			}
-			else { // 키가 없는 경우
+			else {//x에 k가 없고, 풍족한 형제가 없을때!!!
 				if (i == 0) {
 					node* right_c = x->child[i + 1];
 					for (int j = 0; j < t - 1; j++) {
@@ -433,17 +435,4 @@ int Find_Successor(node* x) {
 		x = x->child[0];
 	}
 	return x->key[0];
-}
- 
-    for (int i = 0; i < size; i++) {
-        insert(data);
-    }
-
-    while (choice != 0) {
-        scanf("%d ", &value);
-        delNode(data);
-        scanf("%d ", &choice);
-    }
-    printf("종료!\n");
-
 }
